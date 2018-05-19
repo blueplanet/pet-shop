@@ -63,7 +63,7 @@ App = {
     }).then(function(adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
+          $('.panel-pet').eq(i).find('button').text('Success').toggleClass('btn-primary btn-success').attr('disabled', true);
         }
       }
     }).catch(function(err) {
@@ -75,6 +75,7 @@ App = {
     event.preventDefault();
 
     var petId = parseInt($(event.target).data('id'));
+    var button = event.target;
 
     var adoptionInstance;
 
@@ -91,7 +92,7 @@ App = {
         // Execute adopt as a transaction by sending account
         return adoptionInstance.adopt(petId, {from: account});
       }).then(function(result) {
-        return App.markAdopted();
+        $(button).text('Success').toggleClass('btn-primary btn-success').attr('disabled', true);
       }).catch(function(err) {
         console.log(err.message);
       });
